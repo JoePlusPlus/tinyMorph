@@ -7,3 +7,4 @@ raw_data/
 *.ipynb
 **/__pycache__/
 .env
+.python-version
