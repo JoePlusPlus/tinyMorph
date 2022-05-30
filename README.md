@@ -11,6 +11,12 @@ of ImageNet for data of different sizes & categories.
 After that, we will move on to more experimental configs which have yet to be
 specified.
 
+---> User-Input: potentially use pix2pix + cycleGAN to turn drawings into images
+
+    https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix
+    
+    AS A FIRST MILESTONE
+
 # Workflow
 
  1. get a generic pipeline going, using a pretrained VGG-19 (tensorflow)
@@ -19,6 +25,10 @@ specified.
     
     https://towardsdatascience.com/generate-novel-artistic-artworks-with-deep-learning-f2f61da69e6e
 
+    ( How to quickly implement a pretrained VGG-19 ) 
+
     https://www.tensorflow.org/tutorials/generative/cyclegan
+
+    https://www.tensorflow.org/tutorials/generative/style_transfer#build_the_model 
 
     
