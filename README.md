@@ -12,8 +12,10 @@ of ImageNet for data of different sizes & categories.
 
  1. get a generic pipeline going, using a pretrained VGG-19 (tensorflow)
     --> EXAMPLES: 
+    
     https://towardsdatascience.com/generate-novel-artistic-artworks-with-deep-learning-f2f61da69e6e
 
     https://www.tensorflow.org/tutorials/generative/cyclegan
 
-# What Else ? 
+    
+  
