@@ -5,7 +5,7 @@ and other fancy architectures. We will provide a simple base model to be tinkere
 and will ultimately include a "research report" on all the variations we tested
 during the process. There might be a front-end to play with images.
 
-We will be using trensorflows pretrained models (like VGG-19) and make use
+We will be using tensorflows pretrained models (like VGG-19) and make use
 of ImageNet for data of different sizes & categories.
 
 After that, we will move on to more experimental configs which have yet to be
@@ -29,6 +29,8 @@ specified.
 
     https://www.tensorflow.org/tutorials/generative/cyclegan
 
+    ( Ho wto set up a generative network )
+
     https://www.tensorflow.org/tutorials/generative/style_transfer#build_the_model 
 
-    
+    ( how to set up a basic model )
