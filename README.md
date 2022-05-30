@@ -17,6 +17,10 @@ specified.
     
     AS A FIRST MILESTONE
 
+---> make use of several pretrained models: 
+
+    https://huggingface.co/models
+ 
 # Workflow
 
  1. get a generic pipeline going, using a pretrained VGG-19 (tensorflow)
