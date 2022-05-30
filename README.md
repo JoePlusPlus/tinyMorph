@@ -29,8 +29,8 @@ specified.
 
     https://www.tensorflow.org/tutorials/generative/cyclegan
 
-    ( Ho wto set up a generative network )
+    ( How to set up a generative network )
 
     https://www.tensorflow.org/tutorials/generative/style_transfer#build_the_model 
 
-    ( how to set up a basic model )
+    ( How to set up a basic model )
