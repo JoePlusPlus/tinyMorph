@@ -8,9 +8,13 @@ during the process. There might be a front-end to play with images.
 We will be using trensorflows pretrained models (like VGG-19) and make use
 of ImageNet for data of different sizes & categories.
 
+After that, we will move on to more experimental configs which have yet to be
+specified.
+
 # Workflow
 
  1. get a generic pipeline going, using a pretrained VGG-19 (tensorflow)
+    
     --> EXAMPLES: 
     
     https://towardsdatascience.com/generate-novel-artistic-artworks-with-deep-learning-f2f61da69e6e
@@ -18,4 +22,3 @@ of ImageNet for data of different sizes & categories.
     https://www.tensorflow.org/tutorials/generative/cyclegan
 
     
-  
