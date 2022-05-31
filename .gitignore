@@ -4,7 +4,7 @@
 .DS_Store
 raw_data/
 *.csv
-*.ipynb
 **/__pycache__/
 .env
 .python-version
+notebooks_loc/
