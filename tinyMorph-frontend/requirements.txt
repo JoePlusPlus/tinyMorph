@@ -1,0 +1,6 @@
+streamlit==1.2.0
+streamlit-drawable-canvas==0.9.1
+svgpathtools
+svgwrite
+pyarrow
+cv2
