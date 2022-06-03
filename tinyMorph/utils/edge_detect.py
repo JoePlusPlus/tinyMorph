@@ -1,5 +1,3 @@
-from PIL import Image
-import PIL.ImageOps
 import numpy as np
 import skimage
 import matplotlib.pyplot as plt 
@@ -9,6 +7,9 @@ import scipy.misc as sm
 from scipy import ndimage
 from scipy.ndimage.filters import convolve
 from scipy import misc
+from PIL import Image
+import PIL.ImageOps
+import cv2
 
 def rgb2gray(rgb):
 
@@ -17,13 +18,14 @@ def rgb2gray(rgb):
 
     return gray
 
+
 def load_data(dir_name = 'faces_imgs',stop=None):    
     '''
     Load images from the "faces_imgs" directory
     Images are in JPG and we convert it to gray scale images
     '''
     imgs = []
-    
+
     for filename in os.listdir(dir_name):
         if os.path.isfile(dir_name + '/' + filename):
             img = mpimg.imread(dir_name + '/' + filename)
@@ -31,7 +33,7 @@ def load_data(dir_name = 'faces_imgs',stop=None):
             imgs.append(img)
     return imgs
 
-
+"""
 def visualize(imgs, format=None, gray=False):
     plt.figure(figsize=(20, 40))
     for i, img in enumerate(imgs):
@@ -41,6 +43,7 @@ def visualize(imgs, format=None, gray=False):
         plt.subplot(2, 2, plt_idx)
         plt.imshow(img, format)
     plt.show()
+"""
 
 class cannyEdgeDetector:
     def __init__(self, imgs, sigma=1, kernel_size=5, weak_pixel=75, strong_pixel=255, lowthreshold=0.05, highthreshold=0.15):
@@ -171,15 +174,45 @@ class cannyEdgeDetector:
             self.thresholdImg = self.threshold(self.nonMaxImg)
             img_final = self.hysteresis(self.thresholdImg)
             self.imgs_final.append(img_final)
-
+            print(f"{i+1} pics out of {len(self.imgs)}")
         return self.imgs_final
 
-def main():
-    imgs = load_data(dir_name='data/images_test')
-    detector = cannyEdgeDetector(imgs, sigma=1.4, kernel_size=5, lowthreshold=0.09, highthreshold=0.17, weak_pixel=100)
-    imgs_final = detector.detect()
-    plt.imshow(imgs_final[0])
 
+def make_sketches(dir_name):
+    imgs = load_data(dir_name)
+    detector = cannyEdgeDetector(imgs, sigma=1.4,
+                                 kernel_size=5,
+                                 lowthreshold=0.1,
+                                 highthreshold=0.17,
+                                 weak_pixel=100)
+
+    print("Detecting Edges ...")
+    imgs_final = detector.detect()
+    print(len(imgs_final))
+
+    return imgs_final
+
+
+def save_sketches(imgs_final,save_path):
+    print("Converting & Saving ... ")
+
+    if os.path.isdir(save_path) == False:
+        os.mkdir(save_path)
+
+    for i, image in enumerate(imgs_final):
+        image = np.invert(image)
+        image = Image.fromarray(np.uint8((image)))
+
+        image = image.save(f"{save_path}/train_{i}.png")
+
+    print("Done!")
+
+
+def main():
+    save_path = "../data/canny_images"
+    images = make_sketches(dir_name="../data/images_test")
+    save_sketches(images,save_path)
+    # TODO: delete .DS_store automatically!
 
 if __name__ == "__main__":
     main()
