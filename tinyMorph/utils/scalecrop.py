@@ -38,7 +38,7 @@ def load_img(path_to_img, target_size = 512, crop=False):
 def main():
     files = os.listdir('data/input_img')
     for i, f in enumerate(files):
-        size = 60
+        size = 256
         in_path = os.path.join('data/input_img', f)
         out_img = load_img(in_path, size, True).numpy()[0]
         out_path = os.path.join('data/output_img', f)
