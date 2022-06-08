@@ -1,3 +1,6 @@
+# slightly modified version of 
+
+
 import numpy as np
 import skimage
 import matplotlib.pyplot as plt 
@@ -18,20 +21,23 @@ def rgb2gray(rgb):
 
     return gray
 
-
-def load_data(dir_name = 'faces_imgs',stop=None):    
+def load_data(dir_name,stop=None):    
     '''
     Load images from the "faces_imgs" directory
     Images are in JPG and we convert it to gray scale images
     '''
     imgs = []
-
-    for filename in os.listdir(dir_name):
+    pic_names = []
+    
+    for filename in os.listdir(dir_name): 
         if os.path.isfile(dir_name + '/' + filename):
             img = mpimg.imread(dir_name + '/' + filename)
             img = rgb2gray(img)
             imgs.append(img)
-    return imgs
+            pic_names.append(filename)
+        if len(pic_names) == stop:
+            break
+    return imgs, pic_names
 
 """
 def visualize(imgs, format=None, gray=False):
@@ -165,54 +171,76 @@ class cannyEdgeDetector:
 
         return img
     
-    def detect(self):
+    def detect(self, pic_names, save_path, num):
         imgs_final = []
         for i, img in enumerate(self.imgs):    
-            self.img_smoothed = convolve(img, self.gaussian_kernel(self.kernel_size, self.sigma))
-            self.gradientMat, self.thetaMat = self.sobel_filters(self.img_smoothed)
-            self.nonMaxImg = self.non_max_suppression(self.gradientMat, self.thetaMat)
-            self.thresholdImg = self.threshold(self.nonMaxImg)
-            img_final = self.hysteresis(self.thresholdImg)
-            self.imgs_final.append(img_final)
-            print(f"{i+1} pics out of {len(self.imgs)}")
+            if i == 0:
+                print("Processing started ... ")
+            if i < num:
+                self.img_smoothed = convolve(img, self.gaussian_kernel(self.kernel_size, self.sigma))
+                self.gradientMat, self.thetaMat = self.sobel_filters(self.img_smoothed)
+                self.nonMaxImg = self.non_max_suppression(self.gradientMat, self.thetaMat)
+                self.thresholdImg = self.threshold(self.nonMaxImg)
+                img_final = self.hysteresis(self.thresholdImg)
+                self.imgs_final.append(img_final)
+                if (i+1)%50 == 0:
+                    print(f"{i+1} pics out of {len(self.imgs)}")
+                    save_sketches(self.imgs_final, pic_names, save_path)
+            else: break
+        print(f"{i+1} pics out of {len(self.imgs)}")
+        save_sketches(self.imgs_final, pic_names, save_path)
+        print("Done!")
         return self.imgs_final
 
 
-def make_sketches(dir_name):
-    imgs = load_data(dir_name)
-    detector = cannyEdgeDetector(imgs, sigma=1.4,
-                                 kernel_size=5,
-                                 lowthreshold=0.1,
-                                 highthreshold=0.17,
-                                 weak_pixel=100)
+"""
+Helper functions for making and saving a bunch of sketch images
 
-    print("Detecting Edges ...")
-    imgs_final = detector.detect()
-    print(len(imgs_final))
+"""
 
-    return imgs_final
+save_path = "../raw_data/canny_sketches"
 
 
-def save_sketches(imgs_final,save_path):
+def save_sketches(imgs_final, pic_names, save_path):
     print("Converting & Saving ... ")
 
     if os.path.isdir(save_path) == False:
         os.mkdir(save_path)
 
+    #print(pic_names[:10])
     for i, image in enumerate(imgs_final):
         image = np.invert(image)
         image = Image.fromarray(np.uint8((image)))
 
-        image = image.save(f"{save_path}/train_{i}.png")
+        name = pic_names[i]
+        image = image.save(f"{save_path}/train_{name}")
 
-    print("Done!")
+
+def make_sketches(dir_name, save_path, num):
+    imgs, pic_names = load_data(dir_name,stop=num)
+    detector = cannyEdgeDetector(imgs, sigma=1.4, 
+                                 kernel_size=5, 
+                                 lowthreshold=0.01, 
+                                 highthreshold=0.17, 
+                                 weak_pixel=100)
+    
+    print("Detecting Edges ...")
+    imgs_final = detector.detect(pic_names, save_path, num)
+    
+    
+    print(len(imgs_final))
+    
+    return imgs_final, pic_names
 
 
 def main():
-    save_path = "../data/canny_images"
-    images = make_sketches(dir_name="../data/images_test")
-    save_sketches(images,save_path)
-    # TODO: delete .DS_store automatically!
+    save_path = "../raw_data/canny_sketches"
+    img_dir = '../raw_data/faces_test_size'
+    images, pic_names = make_sketches(img_dir, save_path, num=5)
+
+
+
 
 if __name__ == "__main__":
     main()
+
