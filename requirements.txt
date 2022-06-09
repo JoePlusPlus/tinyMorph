@@ -1,4 +1,5 @@
 # packaging
+
 pip>=9
 setuptools>=26
 twine
@@ -13,3 +14,17 @@ matplotlib
 scipy
 Pillow
 opencv-python
+streamlit==1.2.0
+streamlit-drawable-canvas==0.9.1
+svgpathtools
+svgwrite
+pyarrow
+cv2
+torch>=1.4.0
+torchvision>=0.5.0
+dominate>=2.4.0
+visdom>=0.1.8.8
+packaging
+GPUtil>=1.4.0
+wandb
+
