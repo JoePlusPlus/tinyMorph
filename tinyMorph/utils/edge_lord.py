@@ -187,7 +187,7 @@ class cannyEdgeDetector:
                     print(f"{i+1} pics out of {len(self.imgs)}")
                     save_sketches(self.imgs_final, pic_names, save_path)
             else: break
-        print(f"{i+1} pics out of {len(self.imgs)}")
+            print(f"{i+1} pics out of {len(self.imgs)}")
         save_sketches(self.imgs_final, pic_names, save_path)
         print("Done!")
         return self.imgs_final
@@ -197,9 +197,6 @@ class cannyEdgeDetector:
 Helper functions for making and saving a bunch of sketch images
 
 """
-
-save_path = "../raw_data/canny_sketches"
-
 
 def save_sketches(imgs_final, pic_names, save_path):
     print("Converting & Saving ... ")
@@ -213,8 +210,7 @@ def save_sketches(imgs_final, pic_names, save_path):
         image = Image.fromarray(np.uint8((image)))
 
         name = pic_names[i]
-        image = image.save(f"{save_path}/train_{name}")
-
+        image = image.save(f"{save_path}/{name}")
 
 def make_sketches(dir_name, save_path, num):
     imgs, pic_names = load_data(dir_name,stop=num)
@@ -234,9 +230,9 @@ def make_sketches(dir_name, save_path, num):
 
 
 def main():
-    save_path = "../raw_data/canny_sketches"
-    img_dir = '../raw_data/faces_test_size'
-    images, pic_names = make_sketches(img_dir, save_path, num=5)
+    save_path = "../../raw_data/imgs_people"
+    img_dir = "../../raw_data/imgs_people_canny"
+    images, pic_names = make_sketches(img_dir, save_path, num=24)
 
 
 
